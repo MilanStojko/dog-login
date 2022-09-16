@@ -1,0 +1,368 @@
+.doggo{
+    background-image: linear-gradient(to top right, #f9a743, #f9db5f);
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+  }
+  .face{
+    margin-top: -100px;
+  }
+  .activeFace{
+    transform: rotate(15deg);
+    transform-origin: top;
+    transition: transform .2s ease;
+  }
+  .notActiveFace{
+    transform: rotate(0deg);
+    transform-origin: top;
+    transition: transform .2s ease;
+  }
+  .ears-container, .eyes-container, .nose-container, .mouth-container, .paw-container{
+    display: flex;
+  }
+  
+  /* EARS */
+  .ears-container{
+    justify-content: space-between;
+  }
+  .ear{
+    background-color: #243946;
+    position: relative;
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+    top: -90px;
+  }
+  .ear-left{
+    left: -120px;
+  }
+  .ear-right{
+    right: -120px;
+  }
+  
+  /* EYES */
+  .eyes-container{
+    justify-content: space-around;
+    margin: 0 30px;
+  }
+  .eye{
+    background-color: #243946;
+    position: relative;
+    border-radius: 50%;
+    height: 35px;
+    width: 35px;
+    transform: rotate(25deg);
+  }
+  .pupil{
+    background-color: white;
+    border-radius: 50%;
+    height: 10px;
+    width: 20px;
+    position: absolute;
+    top: 1px;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+  }
+  
+  /* NOSE */
+  .nose-container{
+    justify-content: center;
+    transform: scaleY(0.7) scaleX(1.2);
+    position: relative;
+    margin-top: 50px;
+  }
+  .nose {
+      position: relative;
+      background-color: #243946;
+      text-align: left;
+  }
+  .nose:before,
+  .nose:after {
+      content: '';
+      position: absolute;
+      background-color: inherit;
+  }
+  .nose,
+  .nose:before,
+  .nose:after {
+      width:  40px;
+      height: 40px;
+      border-top-right-radius: 70%;
+  }
+  .nose {
+      transform: rotate(-240deg) skewX(-30deg) scale(1,.866);
+  }
+  .nose:before {
+      transform: rotate(-135deg) skewX(-45deg) scale(1.414,.707) translate(0,-50%);
+  }
+  .nose:after {
+      transform: rotate(135deg) skewY(-45deg) scale(.707,1.414) translate(50%);
+  }
+  .point{
+    background-color: #476375;
+    width: 25px;
+    height: 20px;
+    position: absolute;
+    border-radius: 50%;
+    top: -8px;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+  }
+  
+  /* MOUTH */
+  .mouth-container{
+    flex-direction: column;
+    align-items: center;
+  }
+  .smile{
+    height: 30px;
+    width: 130px;
+    border-bottom: 3px solid #243946;
+    border-right: 3px solid #243946;
+    border-left: 3px solid #243946;
+    border-radius: 0 0 100px 100px;
+  }
+  .mouth{
+    background-color: #243946;
+    height: 20px;
+    width: 90px;
+    border-radius: 0 0 200px 200px;
+    margin-top: -2px;
+  }
+  
+  /* animation for tongue */
+  @keyframes tongue-animation{
+    0%{
+      transform: scaleY(1);
+    }
+    50%{
+      transform: scaleY(0.5);
+    }
+    100%{
+      transform: scaleY(1);
+    }
+  }
+  .tongue{
+    background-color: #FFD7DD;
+    border-top: 8px solid #FCB7BF;
+    border-radius: 0 0 50% 50%;
+    height: 50px;
+    width: 40px;
+    margin-top: -10px;
+    display: flex;
+    justify-content: center;
+    animation: tongue-animation 0.3s infinite ease;
+    transform-origin: top center;
+  }
+  .tongue-line{
+    background-color: #FCB7BF;
+    height: 30px;
+    width: 7px;
+    border-radius: 0 0 5px 5px;
+  }
+  
+  /* PAWS */
+  .paw-container{
+    justify-content: space-around;
+  }
+  .paw{
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 99;
+  }
+  .finger{
+    border-bottom: 2px solid #243946;
+    border-right: 2px solid #243946;
+    border-left: 2px solid #243946;
+    width: 25px;
+    border-radius: 0 0 13px 13px;
+    margin: 0 -1px;
+    background-color: #F9CD57;
+  }
+  .side-finger{
+    height: 25px;
+  }
+  .middle-finger{
+    height: 40px;
+  }
+  
+  /* left paw moves from input to over eye */
+  @keyframes left-paw-input-to-over-eye-start{
+    0%{
+      transform: translateY(0) rotate(0);
+    }
+    100%{
+      transform: translateY(-215px) translateX(15px) rotate(-150deg);
+    }
+  }
+  .over-eye-paw-from-input.left-paw{
+    animation: left-paw-input-to-over-eye-start 0.5s ease forwards;
+    animation-iteration-count: 1, infinite;
+  }
+  
+  /* right paw moves from input over eye*/
+  @keyframes right-paw-input-to-over-eye-start{
+    0%{
+      transform: translateY(0) rotate(0);
+    }
+    100%{
+      transform: translateY(-215px) translateX(-15px) rotate(150deg);
+    }
+  }
+  .over-eye-paw-from-input.right-paw{
+    animation: right-paw-input-to-over-eye-start 0.5s ease forwards;
+    animation-iteration-count: 1, infinite;
+  }
+  
+  /* left paw moves from over eye to input */
+  @keyframes left-paw-input-to-over-eye-end{
+    0%{
+      transform: translateY(-215px) rotate(-150deg);
+    }
+    100%{
+      transform: translateY(0) rotate(0);
+    }
+  }
+  .input-from-over-eye-paw.left-paw{
+    animation: left-paw-input-to-over-eye-end 0.5s ease forwards;
+    animation-iteration-count: 1, infinite;
+  }
+  
+  /* right paw moves from over eye to input */
+  @keyframes right-paw-input-to-over-eye-end{
+    0%{
+      transform: translateY(-215px) rotate(150deg);
+    }
+    100%{
+      transform: translateY(0) rotate(-0);
+    }
+  }
+  .input-from-over-eye-paw.right-paw{
+    animation: right-paw-input-to-over-eye-end 0.5s ease forwards;
+    animation-iteration-count: 1, infinite;
+  }
+  
+  
+  /* left paw moves from input to under eye */
+  @keyframes left-paw-input-to-under-eye-start{
+    0%{
+      transform: translateY(0) rotate(0);
+    }
+    100%{
+      transform: translateY(-175px) translateX(15px) rotate(-150deg);
+    }
+  }
+  .under-eye-paw-from-input.left-paw{
+    animation: left-paw-input-to-under-eye-start 0.5s ease forwards;
+    animation-iteration-count: 1, infinite;
+  }
+  
+  /* left paw moves from under eye to input */
+  @keyframes left-paw-under-eye-to-input-end{
+    0%{
+      transform: translateY(-175px) translateX(15px) rotate(-150deg);
+    }
+    100%{
+      transform: translateY(0) rotate(0);
+    }
+  }
+  .input-from-under-eye-paw.left-paw{
+    animation: left-paw-under-eye-to-input-end 0.5s ease forwards;
+    animation-iteration-count: 1, infinite;
+  }
+  
+  /* right paw moves from input to under eye */
+  @keyframes right-paw-input-to-under-eye-start{
+    0%{
+      transform: translateY(0) rotate(0);
+    }
+    100%{
+      transform: translateY(-175px) translateX(-15px) rotate(150deg);
+    }
+  }
+  .under-eye-paw-from-input.right-paw{
+    animation: right-paw-input-to-under-eye-start 0.5s ease forwards;
+    animation-iteration-count: 1, infinite;
+  }
+  
+  /* right paw moves from under eye to input */
+  @keyframes right-paw-under-eye-to-input-end{
+    0%{
+      transform: translateY(-175px) translateX(-15px) rotate(150deg);
+    }
+    100%{
+      transform: translateY(0) rotate(0);
+    }
+  }
+  .input-from-under-eye-paw.right-paw{
+    animation: right-paw-under-eye-to-input-end 0.5s ease forwards;
+    animation-iteration-count: 1, infinite;
+  }
+  
+  
+  /* left paw moves from under eye to over eye */
+  @keyframes left-paw-under-eye-to-over-eye-start{
+    0%{
+      transform: translateY(-175px) translateX(15px) rotate(-150deg);
+    }
+    100%{
+      transform: translateY(-215px) translateX(15px) rotate(-150deg);
+    }
+  }
+  .over-eye-paw-from-under-eye.left-paw{
+    animation: left-paw-under-eye-to-over-eye-start 0.5s ease forwards;
+    animation-iteration-count: 1, infinite;
+  }
+  
+  /* left paw moves from over eye to under eye */
+  @keyframes left-paw-over-eye-to-under-eye-end{
+    0%{
+      transform: translateY(-215px) translateX(15px) rotate(-150deg);
+    }
+    100%{
+      transform: translateY(-175px) translateX(15px) rotate(-150deg);
+    }
+  }
+  .under-eye-paw-from-over-eye.left-paw{
+    animation: left-paw-over-eye-to-under-eye-end 0.5s ease forwards;
+    animation-iteration-count: 1, infinite;
+  }
+  
+  /* right paw moves from under eye to over eye */
+  @keyframes right-paw-under-eye-to-over-eye-start{
+    0%{
+      transform: translateY(-175px) translateX(-15px) rotate(150deg);
+    }
+    100%{
+      transform: translateY(-215px) translateX(-15px) rotate(150deg);
+    }
+  }
+  .over-eye-paw-from-under-eye.right-paw{
+    animation: right-paw-under-eye-to-over-eye-start 0.5s ease forwards;
+    animation-iteration-count: 1, infinite;
+  }
+  
+  /* right paw moves from over eye to under eye */
+  @keyframes right-paw-over-eye-to-under-eye-end{
+    0%{
+      transform: translateY(-215px) translateX(-15px) rotate(150deg);
+    }
+    100%{
+      transform: translateY(-175px) translateX(-15px) rotate(150deg);
+    }
+  }
+  .under-eye-paw-from-over-eye.right-paw{
+    animation: right-paw-over-eye-to-under-eye-end 0.5s ease forwards;
+    animation-iteration-count: 1, infinite;
+  }
+  @media(min-width: 700px){
+    .doggo{
+      width: 375px;
+      height: 667px;
+      overflow: hidden;
+    }
+  }
