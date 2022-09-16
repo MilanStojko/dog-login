@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import Login from "../../../../screens/login/Login";
 
+import eventsBus from "../../../../events/eventsBus";
+
 import "./doggo.css";
 
 function Doggo() {
@@ -10,8 +12,27 @@ function Doggo() {
   const [cssClassFace, setcssClassFace] = useState("");
   const [inputLength, setInputLength] = useState(0);
 
+
+  //listeners
+useEffect(()=>{
+  eventsBus.on('showPass',showPass);
+  eventsBus.on('hidePass',hidePass);
+  eventsBus.on('handlePassword',setPassword);
+  eventsBus.on('activePaw',activePaw);
+  eventsBus.on('disactivePaw',disactivePaw);
+  eventsBus.on('rotateFace',rotateFace);
+  eventsBus.on('activeFace',activeFace);
+  eventsBus.on('resetFace',resetFace);
+  console.log(showPassword);
+},[])
+  
+
+
+
   function showPass() {
+    eventsBus.dispatch('showPassword',showPassword);
     setShowPassword(!showPassword);
+    
     if (
       cssClassPaw == "over-eye-paw-from-input" ||
       cssClassPaw == "over-eye-paw-from-under-eye"
@@ -24,13 +45,16 @@ function Doggo() {
   //function to hide password and animations
   function hidePass() {
     setShowPassword(!showPassword);
+    eventsBus.dispatch('showPassword',showPassword);
+    
     if (
       cssClassPaw === "under-eye-paw-from-over-eye" ||
       cssClassPaw === "under-eye-paw-from-input"
     ) {
       setCssClassPaw("over-eye-paw-from-under-eye");
     }
-    setType("password");
+    // setType("password");
+    eventsBus.dispatch('setType','password');
   }
 
   //set inputLenght to init face animation
@@ -61,6 +85,7 @@ function Doggo() {
 
   //function to activate paw animation when input focus
   function activePaw() {
+    console.log(showPassword);
     if (!showPassword) {
       setCssClassPaw("over-eye-paw-from-input");
     } else {
@@ -123,7 +148,7 @@ function Doggo() {
         </div>
       </div>
 
-      <div className="footer-buttons">
+      {/* <div className="footer-buttons">
         <button>
           <img src={require("../../../../assets/images/chat.png")} />
         </button>
@@ -133,7 +158,7 @@ function Doggo() {
         <button>
           <img src={require("../../../../assets/images/paw.png")} />
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }

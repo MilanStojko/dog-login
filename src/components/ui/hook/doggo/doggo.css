@@ -1,7 +1,5 @@
 .doggo{
     background-image: linear-gradient(to top right, #f9a743, #f9db5f);
-    height: 100vh;
-    width: 100vw;
     display: flex;
     flex-direction: column;
   }
