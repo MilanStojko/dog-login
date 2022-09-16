@@ -4,7 +4,7 @@ import { Routes, Route, Link } from "react-router-dom";
 //screens
 import SCREENS from "./routes/screensName";
 import Login from "./screens/login/Login";
-import Register from './screens/register/register';
+import Register from './screens/register/Register';
 
 //css
 import "./App.css";

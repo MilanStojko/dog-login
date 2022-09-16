@@ -1,8 +1,12 @@
+import { Link, useNavigate, useLocation, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import eventsBus from "../../events/eventsBus";
+import SCREENS from "../../routes/screensName";
+
 import InputBox from "../../components/ui/func components/inputs/InputBox";
 import Doggo from "../../components/ui/hook/doggo/Doggo";
-import { Link, useNavigate,useLocation,useParams } from 'react-router-dom';
-import {useState,useEffect} from 'react';
-import eventsBus from "../../events/eventsBus";
+
+import './login.css'
 
 function Login(props) {
   function submit(e) {
@@ -10,71 +14,70 @@ function Login(props) {
   }
 
   function showPass() {
-
-    eventsBus.dispatch('showPass');
+    eventsBus.dispatch("showPass");
   }
 
   function hidePass() {
-    eventsBus.dispatch('hidePass');
+    eventsBus.dispatch("hidePass");
   }
 
-  function handlePassword(){
-    eventsBus.dispatch('handlePassword');
+  function handlePassword() {
+    eventsBus.dispatch("handlePassword");
   }
 
-  function activePaw(){
-    eventsBus.dispatch('activePaw');
+  function activePaw() {
+    eventsBus.dispatch("activePaw");
   }
 
-  function disactivePaw(e){
-    eventsBus.dispatch('disactivePaw',e);
+  function disactivePaw(e) {
+    eventsBus.dispatch("disactivePaw", e);
   }
 
-  function rotateFace(e){
-    eventsBus.dispatch('rotateFace',e);
+  function rotateFace(e) {
+    eventsBus.dispatch("rotateFace", e);
   }
 
-  function activeFace(){
-    eventsBus.dispatch('activeFace');
+  function activeFace() {
+    eventsBus.dispatch("activeFace");
   }
 
-  function resetFace(){
-    eventsBus.dispatch('resetFace');
+  function resetFace() {
+    eventsBus.dispatch("resetFace");
   }
 
-  const [state,setState] = useState({
-    type : 'password',
-    showPassword : false,
-  })
+  const [state, setState] = useState({
+    type: "password",
+    showPassword: false,
+  });
 
-
-  function handleType(att){
+  function handleType(att) {
     setState({
       ...state,
-      type : att,
-    })
+      type: att,
+    });
   }
 
-  function handleShowPassword(att){
+  function handleShowPassword(att) {
     setState({
       ...state,
-      showPassword : att,
-    })
+      showPassword: att,
+    });
   }
 
-  useEffect(()=>{
-    eventsBus.on('setType',handleType);
-    eventsBus.on('showPassword',handleShowPassword);
+  useEffect(() => {
+    eventsBus.on("setType", handleType);
+    eventsBus.on("showPassword", handleShowPassword);
+  }, []);
 
-  },[])
+  const navigate = useNavigate();
 
- 
+  function goToRegister() {
+    navigate(SCREENS.registration);
+  }
 
   return (
     <div className="login-container">
-
       <Doggo />
-
 
       <form onSubmit={submit}>
         <div className="input-container">
@@ -121,6 +124,11 @@ function Login(props) {
         </div>
         <button className="button">Log In</button>
       </form>
+      <div className="footer-buttons">
+        <button onClick={goToRegister}>
+          <img src={require("../../assets/images/wifi.png")} />
+        </button>
+      </div>
     </div>
   );
 }
