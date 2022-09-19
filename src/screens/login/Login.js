@@ -6,54 +6,51 @@ import SCREENS from "../../routes/screensName";
 import InputBox from "../../components/ui/func components/inputs/InputBox";
 import Doggo from "../../components/ui/hook/doggo/Doggo";
 
-import './login.css'
+import "./login.css";
 
-function Login(props) {
-
-
+const Login = (props) => {
+  const navigate = useNavigate();
+  
   const [state, setState] = useState({
     type: "password",
     showPassword: false,
   });
 
-
-  function submit(e) {
+  const submit = (e) => {
     e.preventDefault();
   }
 
-  function showPass() {
+  const showPass = () => {
     eventsBus.dispatch("showPass");
   }
 
-  function hidePass() {
+  const hidePass = () =>{
     eventsBus.dispatch("hidePass");
   }
 
-  function handlePassword() {
+  const handlePassword = () =>{
     eventsBus.dispatch("handlePassword");
   }
 
-  function activePaw() {
+  const activePaw = () => {
     eventsBus.dispatch("activePaw");
   }
 
-  function disactivePaw(e) {
+  const disactivePaw = (e) => {
     eventsBus.dispatch("disactivePaw", e);
   }
 
-  function rotateFace(e) {
+  const rotateFace = (e) => {
     eventsBus.dispatch("rotateFace", e);
   }
 
-  function activeFace() {
+  const activeFace = () => {
     eventsBus.dispatch("activeFace");
   }
 
-  function resetFace() {
+  const resetFace = () => {
     eventsBus.dispatch("resetFace");
   }
-
-
 
   // function handleType(att) {
   //   setState({
@@ -62,13 +59,15 @@ function Login(props) {
   //   });
   // }
 
- 
-
   useEffect(() => {
     eventsBus.on("showPassword", handleShowPassword);
-  });
 
-  function handleShowPassword(att) {
+    return ()=>{
+      eventsBus.remove("showPassword")
+    }
+  }, []);
+
+  const handleShowPassword = (att) => {
     console.log(att);
     setState({
       ...state,
@@ -77,15 +76,14 @@ function Login(props) {
     });
   }
 
-  const navigate = useNavigate();
-
-  function goToRegister() {
+  const goToRegister = () => {
+    eventsBus.dispatch("resetFace");
     navigate(SCREENS.registration);
   }
 
   return (
     <div className="login-container">
-      <Doggo screen={'login'} />
+      <Doggo />
 
       <form onSubmit={submit}>
         <div className="input-container">

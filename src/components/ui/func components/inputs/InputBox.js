@@ -3,25 +3,23 @@ import React from "react";
 import PropTypes from "prop-types";
 
 function InputBox(props) {
-
   function changeInput(e) {
     if (!!props.callbackChange) {
-            props.callbackChange(e);
+      props.callbackChange(e);
     }
   }
 
-  function handleFocus(e){
-    if(!!props.callbackFocus)
-    props.callbackFocus(e);
+  function handleFocus(e) {
+    if (!!props.callbackFocus) props.callbackFocus(e);
   }
 
-  function handleBlur(e){
-    if(!!props.callbackBlur)
-    props.callbackBlur(e);
+  function handleBlur(e) {
+    if (!!props.callbackBlur) props.callbackBlur(e);
   }
 
   return (
     <input
+      name="props.name"
       className={props.className}
       type={props.type}
       placeholder={props.placeholder}
@@ -40,6 +38,7 @@ InputBox.propTypes = {
 };
 
 InputBox.defaultProps = {
+  name:'text',
   type: "text",
   placeholder: "Inserisci",
 };

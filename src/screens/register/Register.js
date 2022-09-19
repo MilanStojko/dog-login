@@ -8,41 +8,41 @@ import Doggo from "../../components/ui/hook/doggo/Doggo";
 
 import "./register.css";
 
-function Register() {
+const Register = ()=> {
   function submit(e) {
     e.preventDefault();
   }
 
-  function showPass() {
+  const showPass = ()=> {
     eventsBus.dispatch("showPass");
   }
 
-  function hidePass() {
+  const hidePass = ()=> {
     eventsBus.dispatch("hidePass");
   }
 
-  function handlePassword() {
+  const handlePassword = ()=> {
     eventsBus.dispatch("handlePassword");
   }
 
-  function activePaw() {
+  const activePaw = ()=> {
     eventsBus.dispatch("activePaw");
   }
 
-  function disactivePaw(e) {
+  const disactivePaw = (e)=> {
     eventsBus.dispatch("disactivePaw", e);
   }
 
-  function rotateFace(e) {
+  const rotateFace=(e)=> {
     eventsBus.dispatch("rotateFace", e);
   }
 
-  function activeFace() {
+  const activeFace = ()=> {
     // console.log('active dispatch');
     eventsBus.dispatch("activeFace");
   }
 
-  function resetFace() {
+  const resetFace=()=> {
     eventsBus.dispatch("resetFace");
   }
 
@@ -51,14 +51,14 @@ function Register() {
     showPassword: false,
   });
 
-  function handleType(att) {
+  const handleType = (att)=> {
     setState({
       ...state,
       type: att,
     });
   }
 
-  function handleShowPassword(att) {
+  const handleShowPassword=(att)=> {
     setState({
       ...state,
       showPassword: att.showPassword,
@@ -66,22 +66,24 @@ function Register() {
     });
   }
 
-  function checkPassword(strOne,strTwo){
-    if(strOne === strTwo){
+  const checkPassword = (strOne, strTwo) =>{
+    if (strOne === strTwo) {
       return true;
-    }else{
-      return false;
     }
+    return false;
   }
 
   useEffect(() => {
     // eventsBus.on("setType", handleType);
     eventsBus.on("showPassword", handleShowPassword);
-  });
+    return () => {
+      eventsBus.remove("showPassword");
+    };
+  }, []);
 
   return (
     <div className="login-container">
-      <Doggo screen={'registration'} />
+      <Doggo />
 
       <form onSubmit={submit}>
         <div className="input-container">
