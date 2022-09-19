@@ -11,13 +11,14 @@ function Doggo(props) {
   const [cssClassPaw, setCssClassPaw] = useState("");
   const [cssClassFace, setcssClassFace] = useState("");
   const [inputLength, setInputLength] = useState(0);
-  const [screen, setScreen] = useState('');
+  const [screen, setScreen] = useState("");
 
   let showPassword = false;
 
   //listeners
   useEffect(() => {
-    setScreen(props.screen)
+    setScreen(props.screen);
+    console.log(props.screen);
     eventsBus.on("showPass", showPass);
     eventsBus.on("hidePass", hidePass);
     eventsBus.on("handlePassword", setPassword);
@@ -48,7 +49,7 @@ function Doggo(props) {
     ) {
       setCssClassPaw("input-from-over-eye-paw");
     }
-    //setInputLength(15);
+    setInputLength(15);
   }
 
   function rotateFace(e) {

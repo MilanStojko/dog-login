@@ -360,7 +360,8 @@
   @media(min-width: 700px){
     .doggo{
       width: 375px;
-      height: 667px;
-      overflow: hidden;
+      overflow: scroll;
+      display: flex;
+      flex-direction: column;
     }
   }
