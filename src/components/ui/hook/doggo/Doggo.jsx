@@ -5,65 +5,42 @@ import eventsBus from "../../../../events/eventsBus";
 
 import "./doggo.css";
 
-function Doggo() {
-  const [showPassword, setShowPassword] = useState(false);
+function Doggo(props) {
+  // const [showPassword, setShowPassword] = useState();
   const [type, setType] = useState("password");
   const [cssClassPaw, setCssClassPaw] = useState("");
   const [cssClassFace, setcssClassFace] = useState("");
   const [inputLength, setInputLength] = useState(0);
+  const [screen, setScreen] = useState('');
 
+  let showPassword = false;
 
   //listeners
-useEffect(()=>{
-  eventsBus.on('showPass',showPass);
-  eventsBus.on('hidePass',hidePass);
-  eventsBus.on('handlePassword',setPassword);
-  eventsBus.on('activePaw',activePaw);
-  eventsBus.on('disactivePaw',disactivePaw);
-  eventsBus.on('rotateFace',rotateFace);
-  eventsBus.on('activeFace',activeFace);
-  eventsBus.on('resetFace',resetFace);
-  console.log(showPassword);
-},[])
-  
+  useEffect(() => {
+    setScreen(props.screen)
+    eventsBus.on("showPass", showPass);
+    eventsBus.on("hidePass", hidePass);
+    eventsBus.on("handlePassword", setPassword);
+    eventsBus.on("activePaw", activePaw);
+    eventsBus.on("disactivePaw", disactivePaw);
+    eventsBus.on("rotateFace", rotateFace);
+    eventsBus.on("activeFace", activeFace);
+    eventsBus.on("resetFace", resetFace);
 
+    return () => {
+      eventsBus.remove("activeFace");
+      eventsBus.remove("rotateFace");
+      eventsBus.remove("showPass");
+      eventsBus.remove("hidePass");
+      eventsBus.remove("handlePassword");
+      eventsBus.remove("activePaw");
+      eventsBus.remove("disactivePaw");
+      eventsBus.remove("resetFace");
+    };
+  }, []);
 
-
-  function showPass() {
-    eventsBus.dispatch('showPassword',showPassword);
-    setShowPassword(!showPassword);
-    
-    if (
-      cssClassPaw == "over-eye-paw-from-input" ||
-      cssClassPaw == "over-eye-paw-from-under-eye"
-    ) {
-      setCssClassPaw("under-eye-paw-from-over-eye");
-    }
-    setType("text");
-  }
-
-  //function to hide password and animations
-  function hidePass() {
-    setShowPassword(!showPassword);
-    eventsBus.dispatch('showPassword',showPassword);
-    
-    if (
-      cssClassPaw === "under-eye-paw-from-over-eye" ||
-      cssClassPaw === "under-eye-paw-from-input"
-    ) {
-      setCssClassPaw("over-eye-paw-from-under-eye");
-    }
-    // setType("password");
-    eventsBus.dispatch('setType','password');
-  }
-
-  //set inputLenght to init face animation
-  function rotateFace(e) {
-    setInputLength(15 - e.target.value.length);
-  }
-
-  //function to activate face rotation
   function activeFace() {
+    console.log("active");
     setcssClassFace("activeFace");
     if (
       cssClassPaw == "over-eye-paw-from-input" ||
@@ -71,8 +48,51 @@ useEffect(()=>{
     ) {
       setCssClassPaw("input-from-over-eye-paw");
     }
-    setInputLength(15);
+    //setInputLength(15);
   }
+
+  function rotateFace(e) {
+    setInputLength(15 - e.target.value.length);
+  }
+
+  function showPass() {
+    showPassword = !showPassword;
+
+    if (
+      cssClassPaw == "over-eye-paw-from-input" ||
+      cssClassPaw == "over-eye-paw-from-under-eye"
+    ) {
+      setCssClassPaw("under-eye-paw-from-over-eye");
+    }
+    setType("text");
+    eventsBus.dispatch("showPassword", {
+      showPassword: showPassword,
+      type: "text",
+    });
+  }
+
+  //function to hide password and animations
+  function hidePass() {
+    // setShowPassword(!showPassword);
+    showPassword = !showPassword;
+
+    if (
+      cssClassPaw === "under-eye-paw-from-over-eye" ||
+      cssClassPaw === "under-eye-paw-from-input"
+    ) {
+      setCssClassPaw("over-eye-paw-from-under-eye");
+    }
+    // setType("password");
+    eventsBus.dispatch("showPassword", {
+      showPassword: showPassword,
+      type: "password",
+    });
+    // eventsBus.dispatch('setType','password');
+  }
+
+  //set inputLenght to init face animation
+
+  //function to activate face rotation
 
   //function to reset face rotation
   function resetFace() {
@@ -85,7 +105,6 @@ useEffect(()=>{
 
   //function to activate paw animation when input focus
   function activePaw() {
-    console.log(showPassword);
     if (!showPassword) {
       setCssClassPaw("over-eye-paw-from-input");
     } else {
@@ -100,7 +119,7 @@ useEffect(()=>{
     }
   }
   return (
-    <div className="doggo">
+    <div key={screen} className="doggo">
       <div className="ears-container">
         <div className="ear ear-left"></div>
         <div className="ear ear-right"></div>
@@ -120,7 +139,7 @@ useEffect(()=>{
             <div className="pupil"></div>
           </div>
         </div>
-
+        {console.log("tags:", cssClassFace)}
         <div className="nose-container">
           <div className="nose"></div>
           <div className="point"></div>

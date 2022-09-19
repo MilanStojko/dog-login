@@ -38,6 +38,7 @@ function Register() {
   }
 
   function activeFace() {
+    // console.log('active dispatch');
     eventsBus.dispatch("activeFace");
   }
 
@@ -60,13 +61,27 @@ function Register() {
   function handleShowPassword(att) {
     setState({
       ...state,
-      showPassword: att,
+      showPassword: att.showPassword,
+      type: att.type,
     });
   }
 
+  function checkPassword(strOne,strTwo){
+    if(strOne === strTwo){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  useEffect(() => {
+    // eventsBus.on("setType", handleType);
+    eventsBus.on("showPassword", handleShowPassword);
+  });
+
   return (
     <div className="login-container">
-      <Doggo />
+      <Doggo screen={'registration'} />
 
       <form onSubmit={submit}>
         <div className="input-container">
@@ -178,7 +193,7 @@ function Register() {
             />
           )}
         </div>
-        <button className="button">Log In</button>
+        <button className="button">Registrati</button>
       </form>
     </div>
   );

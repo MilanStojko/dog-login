@@ -9,6 +9,14 @@ import Doggo from "../../components/ui/hook/doggo/Doggo";
 import './login.css'
 
 function Login(props) {
+
+
+  const [state, setState] = useState({
+    type: "password",
+    showPassword: false,
+  });
+
+
   function submit(e) {
     e.preventDefault();
   }
@@ -45,29 +53,29 @@ function Login(props) {
     eventsBus.dispatch("resetFace");
   }
 
-  const [state, setState] = useState({
-    type: "password",
-    showPassword: false,
-  });
 
-  function handleType(att) {
-    setState({
-      ...state,
-      type: att,
-    });
-  }
 
-  function handleShowPassword(att) {
-    setState({
-      ...state,
-      showPassword: att,
-    });
-  }
+  // function handleType(att) {
+  //   setState({
+  //     ...state,
+  //     type: att,
+  //   });
+  // }
+
+ 
 
   useEffect(() => {
-    eventsBus.on("setType", handleType);
     eventsBus.on("showPassword", handleShowPassword);
-  }, []);
+  });
+
+  function handleShowPassword(att) {
+    console.log(att);
+    setState({
+      ...state,
+      showPassword: att.showPassword,
+      type: att.type,
+    });
+  }
 
   const navigate = useNavigate();
 
@@ -77,7 +85,7 @@ function Login(props) {
 
   return (
     <div className="login-container">
-      <Doggo />
+      <Doggo screen={'login'} />
 
       <form onSubmit={submit}>
         <div className="input-container">
